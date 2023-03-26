@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  app:
+    container_name: "research-online-redis-go-app"
+    image: golang:1.20.0-alpine
+    working_dir: /go/src/github.com/doutivity/research-online-redis-go
+    volumes:
+      - .:/go/src/github.com/doutivity/research-online-redis-go
+    command: "sleep 1d"
+    depends_on:
+      - redis1
+      - keydb1
+      - dragonflydb1
+
+  redis1:
+    container_name: "research-online-redis-1"
+    image: "redis:latest"
+
+  keydb1:
+    container_name: "research-online-keydb-1"
+    image: "eqalpha/keydb:latest"
+
+  dragonflydb1:
+    container_name: "research-online-dragonflydb-1"
+    image: "docker.dragonflydb.io/dragonflydb/dragonfly"
+    ulimits:
+      memlock: -1
+    volumes:
+      - dragonflydata:/data
+
+volumes:
+  dragonflydata:
