@@ -21,3 +21,19 @@ func TestKeydbSortedSetOnlineStorage(t *testing.T) {
 func TestDragonflydbSortedSetOnlineStorage(t *testing.T) {
 	testOnlineStorage(t, "dragonflydb1:6379", sortedSetOnlineStorageConstructor)
 }
+
+func BenchmarkRedisSortedSetOnlineStorage(b *testing.B) {
+	benchmarkOnlineStorage(b, "redis1:6379", sortedSetOnlineStorageConstructor)
+}
+
+func BenchmarkKeydbSortedSetOnlineStorage(b *testing.B) {
+	benchmarkOnlineStorage(b, "keydb1:6379", sortedSetOnlineStorageConstructor)
+}
+
+func BenchmarkDragonflydbSortedSetOnlineStorage(b *testing.B) {
+	if testing.Short() {
+		return
+	}
+
+	benchmarkOnlineStorage(b, "dragonflydb1:6379", sortedSetOnlineStorageConstructor)
+}

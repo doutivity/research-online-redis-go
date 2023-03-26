@@ -23,4 +23,11 @@ services:
 
   dragonflydb1:
     container_name: "research-online-dragonflydb-1"
-    image: "docker.dragonflydb.io/dragonflydb/dragonfly:latest"
+    image: "docker.dragonflydb.io/dragonflydb/dragonfly"
+    ulimits:
+      memlock: -1
+    volumes:
+      - dragonflydata:/data
+
+volumes:
+  dragonflydata:

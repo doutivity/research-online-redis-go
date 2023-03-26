@@ -1,59 +1,39 @@
 package research_online_redis_go
 
 import (
-	"context"
 	"testing"
 
-	"github.com/stretchr/testify/require"
+	"github.com/redis/go-redis/v9"
 )
 
+var hashOnlineStorageConstructor onlineStorageConstructor = func(client *redis.Client) OnlineStorage {
+	return NewHashOnlineStorage(client)
+}
+
 func TestRedisHashOnlineStorage(t *testing.T) {
-	testHashOnlineStorage(t, "redis1:6379")
+	testOnlineStorage(t, "redis1:6379", hashOnlineStorageConstructor)
 }
 
 func TestKeydbHashOnlineStorage(t *testing.T) {
-	testHashOnlineStorage(t, "keydb1:6379")
+	testOnlineStorage(t, "keydb1:6379", hashOnlineStorageConstructor)
 }
 
 func TestDragonflydbHashOnlineStorage(t *testing.T) {
-	testHashOnlineStorage(t, "dragonflydb1:6379")
+	testOnlineStorage(t, "dragonflydb1:6379", hashOnlineStorageConstructor)
 }
 
-func testHashOnlineStorage(t *testing.T, addr string) {
-	t.Helper()
+func BenchmarkRedisHashOnlineStorage(b *testing.B) {
+	benchmarkOnlineStorage(b, "redis1:6379", hashOnlineStorageConstructor)
+}
 
-	ctx := context.Background()
+func BenchmarkKeydbHashOnlineStorage(b *testing.B) {
+	benchmarkOnlineStorage(b, "keydb1:6379", hashOnlineStorageConstructor)
+}
 
-	client, err := Client(ctx, addr)
-	require.NoError(t, err)
-
-	require.NoError(t, client.FlushDB(ctx).Err())
-
-	storage := NewHashOnlineStorage(client)
-
-	expected := []UserOnlinePair{
-		{
-			UserID:    1000001,
-			Timestamp: 1679800725,
-		},
-		{
-			UserID:    1000002,
-			Timestamp: 1679800730,
-		},
-		{
-			UserID:    1000003,
-			Timestamp: 1679800735,
-		},
+func BenchmarkDragonflydbHashOnlineStorage(b *testing.B) {
+	if testing.Short() {
+		return
 	}
 
-	for _, pair := range expected {
-		err := storage.Store(ctx, pair)
-
-		require.NoError(t, err)
-	}
-
-	actual, err := storage.GetAndClear(ctx)
-	require.NoError(t, err)
-
-	requireUserOnlinePairsEqual(t, expected, actual)
+	benchmarkOnlineStorage(b, "dragonflydb1:6379", hashOnlineStorageConstructor)
 }
