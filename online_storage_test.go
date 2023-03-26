@@ -4,22 +4,13 @@ import (
 	"context"
 	"testing"
 
+	"github.com/redis/go-redis/v9"
 	"github.com/stretchr/testify/require"
 )
 
-func TestRedisHashOnlineStorage(t *testing.T) {
-	testHashOnlineStorage(t, "redis1:6379")
-}
+type onlineStorageConstructor func(client *redis.Client) OnlineStorage
 
-func TestKeydbHashOnlineStorage(t *testing.T) {
-	testHashOnlineStorage(t, "keydb1:6379")
-}
-
-func TestDragonflydbHashOnlineStorage(t *testing.T) {
-	testHashOnlineStorage(t, "dragonflydb1:6379")
-}
-
-func testHashOnlineStorage(t *testing.T, addr string) {
+func testOnlineStorage(t *testing.T, addr string, newStorage onlineStorageConstructor) {
 	t.Helper()
 
 	ctx := context.Background()
@@ -29,7 +20,7 @@ func testHashOnlineStorage(t *testing.T, addr string) {
 
 	require.NoError(t, client.FlushDB(ctx).Err())
 
-	storage := NewHashOnlineStorage(client)
+	storage := newStorage(client)
 
 	expected := []UserOnlinePair{
 		{
