@@ -45,6 +45,10 @@ func testOnlineStorage(t *testing.T, addr string, newStorage onlineStorageConstr
 		require.NoError(t, err)
 	}
 
+	actualCount, err := storage.Count(ctx)
+	require.NoError(t, err)
+	require.Equal(t, int64(len(expected)), int64(actualCount))
+
 	actual, err := storage.GetAndClear(ctx)
 	require.NoError(t, err)
 
@@ -82,4 +86,8 @@ func benchmarkOnlineStorage(b *testing.B, addr string, newStorage onlineStorageC
 			require.NoError(b, err)
 		}
 	})
+
+	actualCount, err := storage.Count(ctx)
+	require.NoError(b, err)
+	require.Equal(b, int64(b.N), int64(actualCount))
 }

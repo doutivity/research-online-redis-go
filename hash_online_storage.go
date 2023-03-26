@@ -19,6 +19,10 @@ func (s *HashOnlineStorage) Store(ctx context.Context, pair UserOnlinePair) erro
 	return s.client.HSet(ctx, "h:online:main", strconv.FormatInt(pair.UserID, 10), pair.Timestamp).Err()
 }
 
+func (s *HashOnlineStorage) Count(ctx context.Context) (int64, error) {
+	return s.client.HLen(ctx, "h:online:main").Result()
+}
+
 func (s *HashOnlineStorage) GetAndClear(ctx context.Context) ([]UserOnlinePair, error) {
 	var (
 		oldKey = "h:online:main"

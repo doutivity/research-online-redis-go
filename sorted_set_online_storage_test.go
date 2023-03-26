@@ -32,7 +32,7 @@ func BenchmarkKeydbSortedSetOnlineStorage(b *testing.B) {
 
 func BenchmarkDragonflydbSortedSetOnlineStorage(b *testing.B) {
 	if testing.Short() {
-		return
+		b.Skip()
 	}
 
 	benchmarkOnlineStorage(b, "dragonflydb1:6379", sortedSetOnlineStorageConstructor)

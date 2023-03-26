@@ -32,7 +32,7 @@ func BenchmarkKeydbHashOnlineStorage(b *testing.B) {
 
 func BenchmarkDragonflydbHashOnlineStorage(b *testing.B) {
 	if testing.Short() {
-		return
+		b.Skip()
 	}
 
 	benchmarkOnlineStorage(b, "dragonflydb1:6379", hashOnlineStorageConstructor)

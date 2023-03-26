@@ -23,6 +23,10 @@ func (s *SortedSetOnlineStorage) Store(ctx context.Context, pair UserOnlinePair)
 	}).Err()
 }
 
+func (s *SortedSetOnlineStorage) Count(ctx context.Context) (int64, error) {
+	return s.client.ZCard(ctx, "z:online:main").Result()
+}
+
 func (s *SortedSetOnlineStorage) GetAndClear(ctx context.Context) ([]UserOnlinePair, error) {
 	var (
 		oldKey = "z:online:main"
