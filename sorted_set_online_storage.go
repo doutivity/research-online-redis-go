@@ -2,7 +2,6 @@ package research_online_redis_go
 
 import (
 	"context"
-	"math"
 	"strconv"
 
 	"github.com/redis/go-redis/v9"
@@ -35,12 +34,10 @@ func (s *SortedSetOnlineStorage) GetAndClear(ctx context.Context) ([]UserOnlineP
 
 	err := s.client.Rename(ctx, oldKey, newKey).Err()
 	if err != nil {
-
 		return nil, err
 	}
 
-	// math.MaxInt32 only because Dragonflydb
-	members, err := s.client.ZRangeWithScores(ctx, newKey, 0, math.MaxInt32).Result()
+	members, err := s.client.ZRangeWithScores(ctx, newKey, 0, -1).Result()
 	if err != nil {
 		return nil, err
 	}

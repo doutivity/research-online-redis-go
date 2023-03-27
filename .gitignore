@@ -14,4 +14,6 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-all-bench-10.txt
+bench-redis-1000000x.txt
+bench-keydb-1000000x.txt
+bench-dragonflydb-1000000x.txt
