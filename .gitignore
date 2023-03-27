@@ -17,3 +17,10 @@
 bench-redis-1000000x.txt
 bench-keydb-1000000x.txt
 bench-dragonflydb-1000000x.txt
+
+redis-memory-hash-1m.txt
+redis-memory-sorted-set-1m.txt
+redis-memory-set-1m.txt
+keydb-memory-hash-1m.txt
+keydb-memory-sorted-set-1m.txt
+keydb-memory-set-1m.txt
