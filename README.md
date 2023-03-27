@@ -7,6 +7,13 @@ https://dou.ua/forums/topic/35260/
 - Help Ukraine via [SaveLife](https://savelife.in.ua/en/donate-en/) fund
 - More info on [war.ukraine.ua](https://war.ukraine.ua/) and [MFA of Ukraine](https://twitter.com/MFA_Ukraine)
 
+# Databases
+| Name                                                    | Stars  |
+|---------------------------------------------------------|--------|
+| [Redis](https://github.com/redis/redis)                 | 59100+ |
+| [KeyDB](https://github.com/Snapchat/KeyDB)              | 7100+  |
+| [DragonflyDB](https://github.com/dragonflydb/dragonfly) | 18000+ |
+
 # Testing
 ```bash
 make env-up
