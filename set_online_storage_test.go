@@ -36,9 +36,5 @@ func BenchmarkKeydbSetOnlineStorage(b *testing.B) {
 }
 
 func BenchmarkDragonflydbSetOnlineStorage(b *testing.B) {
-	if testing.Short() {
-		b.Skip()
-	}
-
 	benchmarkOnlineStorage(b, "dragonflydb1:6379", setOnlineStorageBenchmarkConstructor)
 }
