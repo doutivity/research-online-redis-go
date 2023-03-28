@@ -14,6 +14,64 @@ https://dou.ua/forums/topic/35260/
 | [KeyDB](https://github.com/Snapchat/KeyDB)              | 7100+  |
 | [DragonflyDB](https://github.com/dragonflydb/dragonfly) | 18000+ |
 
+# Data structure usage examples
+### Hash
+```bash
+docker exec research-online-redis-1 redis-cli monitor
+```
+```bash
+docker exec research-online-redis-go-app go test ./... -v -run=TestRedisHashOnlineStorage -count=1
+```
+```text
+"flushall"
+"hset" "h:online:main" "10000001" "1679800725"
+"hset" "h:online:main" "10000002" "1679800730"
+"hset" "h:online:main" "10000003" "1679800735"
+"hlen" "h:online:main"
+"rename" "h:online:main" "h:online:tmp"
+"hgetall" "h:online:tmp"
+```
+### Sorted Set
+```bash
+docker exec research-online-redis-1 redis-cli monitor
+```
+```bash
+docker exec research-online-redis-go-app go test ./... -v -run=TestRedisSortedSetOnlineStorage -count=1
+```
+```text
+"flushall"
+"zadd" "z:online:main" "1679800725" "10000001"
+"zadd" "z:online:main" "1679800730" "10000002"
+"zadd" "z:online:main" "1679800735" "10000003"
+"zcard" "z:online:main"
+"rename" "z:online:main" "z:online:tmp"
+"zrange" "z:online:tmp" "0" "-1" "withscores"
+```
+### Set
+```bash
+docker exec research-online-redis-1 redis-cli monitor
+```
+```bash
+docker exec research-online-redis-go-app go test ./... -v -run=TestRedisSetOnlineStorage -count=1
+```
+```text
+"flushall"
+"sadd" "s:online:main:1679800725" "10000001"
+"sadd" "s:online:main:1679800730" "10000002"
+"sadd" "s:online:main:1679800735" "10000003"
+"keys" "s:online:main:*"
+"scard" "s:online:main:1679800730"
+"scard" "s:online:main:1679800725"
+"scard" "s:online:main:1679800735"
+"keys" "s:online:main:*"
+"rename" "s:online:main:1679800730" "s:online:tmp"
+"smembers" "s:online:tmp"
+"rename" "s:online:main:1679800725" "s:online:tmp"
+"smembers" "s:online:tmp"
+"rename" "s:online:main:1679800735" "s:online:tmp"
+"smembers" "s:online:tmp"
+```
+
 # Testing
 ```bash
 make env-up
@@ -43,14 +101,14 @@ make bench
 ```
 | Database name | Data structure | time/op                                                                                  |
 |---------------|----------------|------------------------------------------------------------------------------------------|
-| Redis         | Hash           | 18.4µs ±18%                                                                              |
-| KeyDB         | Hash           | 20.6µs ±27%                                                                              |
+| Redis         | Hash           | 13.6µs ± 4%                                                                              |
+| KeyDB         | Hash           | 16.4µs ±34%                                                                              |
 | DragonflyDB   | Hash           | [unknown, cause server misbehaving](https://github.com/dragonflydb/dragonfly/issues/993) |
-| Redis         | Sorted Set     | 21.6µs ±18%                                                                              |
-| KeyDB         | Sorted Set     | 21.5µs ±27%                                                                              |
-| DragonflyDB   | Sorted Set     | 23.1µs ± 9%                                                                              |
-| Redis         | Set            | 19.6µs ±24%                                                                              |
-| KeyDB         | Set            | 19.3µs ±27%                                                                              |
+| Redis         | Sorted Set     | 16.2µs ±26%                                                                              |
+| KeyDB         | Sorted Set     | 20.3µs ±24%                                                                              |
+| DragonflyDB   | Sorted Set     | 21.7µs ± 3%                                                                             |
+| Redis         | Set            | 15.1µs ±25%                                                                              |
+| KeyDB         | Set            | 18.5µs ±22%                                                                              |
 | DragonflyDB   | Set            | 17.2µs ±25%                                                                              |
 
 # Used memory
