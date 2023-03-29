@@ -2,6 +2,7 @@ package research_online_redis_go
 
 import (
 	"context"
+	"os"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -68,16 +69,31 @@ func benchmarkOnlineStorage(b *testing.B, addr string, newStorage onlineStorageC
 	storage := newStorage(client)
 
 	var (
-		counter        = int64(0)
 		startTimestamp = time.Now().Truncate(time.Hour).Unix()
 		startUserID    = int64(1e7)
 	)
 
 	b.ResetTimer()
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() {
-			index := atomic.AddInt64(&counter, 1)
 
+	if os.Getenv("MODE") == "parallel" {
+		var (
+			counter = int64(0)
+		)
+
+		b.RunParallel(func(pb *testing.PB) {
+			for pb.Next() {
+				index := atomic.AddInt64(&counter, 1)
+
+				err := storage.Store(ctx, UserOnlinePair{
+					UserID:    startUserID + index,
+					Timestamp: startTimestamp + index,
+				})
+
+				require.NoError(b, err)
+			}
+		})
+	} else {
+		for index := int64(0); index < int64(b.N); index++ {
 			err := storage.Store(ctx, UserOnlinePair{
 				UserID:    startUserID + index,
 				Timestamp: startTimestamp + index,
@@ -85,7 +101,7 @@ func benchmarkOnlineStorage(b *testing.B, addr string, newStorage onlineStorageC
 
 			require.NoError(b, err)
 		}
-	})
+	}
 
 	actualCount, err := storage.Count(ctx)
 	require.NoError(b, err)

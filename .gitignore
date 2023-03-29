@@ -16,9 +16,12 @@
 
 private
 
-bench-redis-1000000x.txt
-bench-keydb-1000000x.txt
-bench-dragonflydb-1000000x.txt
+bench-redis-1000000x-sequence.txt
+bench-keydb-1000000x-sequence.txt
+bench-dragonflydb-1000000x-sequence.txt
+bench-redis-1000000x-parallel.txt
+bench-keydb-1000000x-parallel.txt
+bench-dragonflydb-1000000x-parallel.txt
 
 redis-memory-hash-1m.txt
 redis-memory-hash-10m.txt
