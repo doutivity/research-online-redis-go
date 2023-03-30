@@ -8,11 +8,11 @@ https://dou.ua/forums/topic/35260/
 - More info on [war.ukraine.ua](https://war.ukraine.ua/) and [MFA of Ukraine](https://twitter.com/MFA_Ukraine)
 
 # Databases
-| Name                                                    | Stars  |
-|---------------------------------------------------------|--------|
-| [Redis](https://github.com/redis/redis)                 | 59100+ |
-| [KeyDB](https://github.com/Snapchat/KeyDB)              | 7100+  |
-| [DragonflyDB](https://github.com/dragonflydb/dragonfly) | 18000+ |
+| Name                                                    | Stars  | Language                               |
+|---------------------------------------------------------|--------|----------------------------------------|
+| [Redis](https://github.com/redis/redis)                 | 59100+ | [C](https://dou.ua/forums/tags/C/)     |
+| [KeyDB](https://github.com/Snapchat/KeyDB)              | 7100+  | [C++](https://dou.ua/forums/tags/C++/) |
+| [DragonflyDB](https://github.com/dragonflydb/dragonfly) | 18300+ | [C++](https://dou.ua/forums/tags/C++/) |
 
 # Data structure usage examples
 ### Hash

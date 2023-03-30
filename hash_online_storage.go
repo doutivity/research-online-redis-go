@@ -31,7 +31,6 @@ func (s *HashOnlineStorage) GetAndClear(ctx context.Context) ([]UserOnlinePair, 
 
 	err := s.client.Rename(ctx, oldKey, newKey).Err()
 	if err != nil {
-
 		return nil, err
 	}
 
