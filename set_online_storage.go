@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/hashicorp/go-multierror"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -27,6 +28,25 @@ func NewSetOnlineStorage(client *redis.Client, group int64) *SetOnlineStorage {
 
 func (s *SetOnlineStorage) Store(ctx context.Context, pair UserOnlinePair) error {
 	return s.client.SAdd(ctx, s.key(pair.Timestamp), pair.UserID).Err()
+}
+
+func (s *SetOnlineStorage) BatchStore(ctx context.Context, pairs []UserOnlinePair) error {
+	groups := make(map[int64][]interface{}, 1)
+	for _, pair := range pairs {
+		round := s.round(pair.Timestamp)
+
+		groups[round] = append(groups[round], pair.UserID)
+	}
+
+	var err error
+	for timestamp, userIDs := range groups {
+		redisErr := s.client.SAdd(ctx, s.key(timestamp), userIDs).Err()
+		if redisErr != nil {
+			err = multierror.Append(err, redisErr)
+		}
+	}
+
+	return err
 }
 
 func (s *SetOnlineStorage) Count(ctx context.Context) (int64, error) {
@@ -100,7 +120,11 @@ func (s *SetOnlineStorage) keys(ctx context.Context) ([]string, error) {
 }
 
 func (s *SetOnlineStorage) key(timestamp int64) string {
-	return fmt.Sprintf("s:online:main:%d", (timestamp/s.group)*s.group)
+	return fmt.Sprintf("s:online:main:%d", s.round(timestamp))
+}
+
+func (s *SetOnlineStorage) round(timestamp int64) int64 {
+	return (timestamp / s.group) * s.group
 }
 
 func (s *SetOnlineStorage) parseKey(key string) (timestamp int64, err error) {

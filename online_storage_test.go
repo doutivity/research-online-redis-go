@@ -3,6 +3,7 @@ package research_online_redis_go
 import (
 	"context"
 	"os"
+	"strconv"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -69,6 +70,7 @@ func benchmarkOnlineStorage(b *testing.B, addr string, newStorage onlineStorageC
 	storage := newStorage(client)
 
 	var (
+		expectedCount  = int64(b.N)
 		startTimestamp = time.Now().Truncate(time.Hour).Unix()
 		startUserID    = int64(1e7)
 	)
@@ -80,18 +82,45 @@ func benchmarkOnlineStorage(b *testing.B, addr string, newStorage onlineStorageC
 			counter = int64(0)
 		)
 
-		b.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				index := atomic.AddInt64(&counter, 1)
+		if os.Getenv("BATCH") == "" {
+			b.RunParallel(func(pb *testing.PB) {
+				for pb.Next() {
+					index := atomic.AddInt64(&counter, 1)
 
-				err := storage.Store(ctx, UserOnlinePair{
-					UserID:    startUserID + index,
-					Timestamp: startTimestamp + index,
-				})
+					err := storage.Store(ctx, UserOnlinePair{
+						UserID:    startUserID + index,
+						Timestamp: startTimestamp + index,
+					})
 
-				require.NoError(b, err)
-			}
-		})
+					require.NoError(b, err)
+				}
+			})
+		} else {
+			batch, err := strconv.ParseInt(os.Getenv("BATCH"), 10, 64)
+			require.NoError(b, err)
+			require.True(b, batch >= 1)
+
+			expectedCount *= batch
+
+			b.RunParallel(func(pb *testing.PB) {
+				pairs := make([]UserOnlinePair, batch)
+
+				for pb.Next() {
+					index := atomic.AddInt64(&counter, batch)
+
+					for i := int64(0); i < batch; i++ {
+						pairs[i] = UserOnlinePair{
+							UserID:    startUserID + index - i,
+							Timestamp: startTimestamp + index - i,
+						}
+					}
+
+					err := storage.BatchStore(ctx, pairs)
+
+					require.NoError(b, err)
+				}
+			})
+		}
 	} else {
 		for index := int64(0); index < int64(b.N); index++ {
 			err := storage.Store(ctx, UserOnlinePair{
@@ -105,5 +134,5 @@ func benchmarkOnlineStorage(b *testing.B, addr string, newStorage onlineStorageC
 
 	actualCount, err := storage.Count(ctx)
 	require.NoError(b, err)
-	require.Equal(b, int64(b.N), int64(actualCount))
+	require.Equal(b, expectedCount, actualCount)
 }

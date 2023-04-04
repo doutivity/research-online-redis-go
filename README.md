@@ -99,24 +99,23 @@ make env-down
 --- PASS: TestDragonflydbSortedSetOnlineStorage (0.05s)
 PASS
 ok  	github.com/doutivity/research-online-redis-go	0.214s
-senseye@senseye-G3-3579:~/go/src/github.com/doutivity/research-on
 ```
 
 # Benchmark
 ```bash
 make bench
-# MODE=sequence go test ./... -v -bench='Redis(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee bench-redis-1000000x-sequence.txt
-# MODE=sequence go test ./... -v -bench='Keydb(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee bench-keydb-1000000x-sequence.txt
-# MODE=sequence go test ./... -v -bench='Dragonflydb(SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee bench-dragonflydb-1000000x-sequence.txt
-# MODE=parallel go test ./... -v -bench='Redis(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee bench-redis-1000000x-parallel.txt
-# MODE=parallel go test ./... -v -bench='Keydb(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee bench-keydb-1000000x-parallel.txt
-# MODE=parallel go test ./... -v -bench='Dragonflydb(SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee bench-dragonflydb-1000000x-parallel.txt
-# benchstat bench-redis-1000000x-sequence.txt
-# benchstat bench-keydb-1000000x-sequence.txt
-# benchstat bench-dragonflydb-1000000x-sequence.txt
-# benchstat bench-redis-1000000x-parallel.txt
-# benchstat bench-keydb-1000000x-parallel.txt
-# benchstat bench-dragonflydb-1000000x-parallel.txt
+# MODE=sequence go test ./... -v -bench='Redis(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-redis-1000000x-sequence.txt
+# MODE=sequence go test ./... -v -bench='Keydb(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-keydb-1000000x-sequence.txt
+# MODE=sequence go test ./... -v -bench='Dragonflydb(SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-dragonflydb-1000000x-sequence.txt
+# MODE=parallel go test ./... -v -bench='Redis(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-redis-1000000x-parallel.txt
+# MODE=parallel go test ./... -v -bench='Keydb(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-keydb-1000000x-parallel.txt
+# MODE=parallel go test ./... -v -bench='Dragonflydb(SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-dragonflydb-1000000x-parallel.txt
+# benchstat ./output/bench-redis-1000000x-sequence.txt
+# benchstat ./output/bench-keydb-1000000x-sequence.txt
+# benchstat ./output/bench-dragonflydb-1000000x-sequence.txt
+# benchstat ./output/bench-redis-1000000x-parallel.txt
+# benchstat ./output/bench-keydb-1000000x-parallel.txt
+# benchstat ./output/bench-dragonflydb-1000000x-parallel.txt
 ```
 | Database name | Data structure | sequence time/op                                                                         | parallel time/op                                                                         |
 |---------------|----------------|------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
@@ -143,15 +142,15 @@ make bench-dragonflydb-memory-25m
 ```bash
 # docker exec research-online-redis-1 redis-cli flushall
 # docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$^ -bench='Redis(Hash)' -benchmem -benchtime=25000000x -count=1
-# docker exec research-online-redis-1 redis-cli info memory | tee redis-memory-hash-25m.txt
+# docker exec research-online-redis-1 redis-cli info memory | tee ./output/redis-memory-hash-25m.txt
 #
 # docker exec research-online-redis-1 redis-cli flushall
 # docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$^ -bench='Redis(SortedSet)' -benchmem -benchtime=25000000x -count=1
-# docker exec research-online-redis-1 redis-cli info memory | tee redis-memory-sorted-set-25m.txt
+# docker exec research-online-redis-1 redis-cli info memory | tee ./output/redis-memory-sorted-set-25m.txt
 #
 # docker exec research-online-redis-1 redis-cli flushall
 # docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$^ -bench='Redis(Set)' -benchmem -benchtime=25000000x -count=1
-# docker exec research-online-redis-1 redis-cli info memory | tee redis-memory-set-25m.txt
+# docker exec research-online-redis-1 redis-cli info memory | tee ./output/redis-memory-set-25m.txt
 ```
 | Database name | Data structure | Users      | Memory                                                                                   |
 |---------------|----------------|------------|------------------------------------------------------------------------------------------|

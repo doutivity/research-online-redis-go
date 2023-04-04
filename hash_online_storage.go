@@ -19,6 +19,15 @@ func (s *HashOnlineStorage) Store(ctx context.Context, pair UserOnlinePair) erro
 	return s.client.HSet(ctx, "h:online:main", strconv.FormatInt(pair.UserID, 10), pair.Timestamp).Err()
 }
 
+func (s *HashOnlineStorage) BatchStore(ctx context.Context, pairs []UserOnlinePair) error {
+	values := make([]interface{}, 0, len(pairs)*2)
+	for _, pair := range pairs {
+		values = append(values, pair.Timestamp, pair.UserID)
+	}
+
+	return s.client.HSet(ctx, "h:online:main", values).Err()
+}
+
 func (s *HashOnlineStorage) Count(ctx context.Context) (int64, error) {
 	return s.client.HLen(ctx, "h:online:main").Result()
 }

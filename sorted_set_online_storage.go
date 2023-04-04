@@ -22,6 +22,18 @@ func (s *SortedSetOnlineStorage) Store(ctx context.Context, pair UserOnlinePair)
 	}).Err()
 }
 
+func (s *SortedSetOnlineStorage) BatchStore(ctx context.Context, pairs []UserOnlinePair) error {
+	members := make([]redis.Z, len(pairs))
+	for i, pair := range pairs {
+		members[i] = redis.Z{
+			Score:  float64(pair.Timestamp),
+			Member: strconv.FormatInt(pair.UserID, 10),
+		}
+	}
+
+	return s.client.ZAdd(ctx, "z:online:main", members...).Err()
+}
+
 func (s *SortedSetOnlineStorage) Count(ctx context.Context) (int64, error) {
 	return s.client.ZCard(ctx, "z:online:main").Result()
 }
