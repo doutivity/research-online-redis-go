@@ -152,35 +152,35 @@ make bench-dragonflydb-memory-25m
 # docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$^ -bench='Redis(Set)' -benchmem -benchtime=25000000x -count=1
 # docker exec research-online-redis-1 redis-cli info memory | tee ./output/redis-memory-set-25m.txt
 ```
-| Database name | Data structure | Users      | Memory                                                                                   |
-|---------------|----------------|------------|------------------------------------------------------------------------------------------|
-| Redis         | Hash           | 1 000 000  | 62.64 MB                                                                                 |
-| KeyDB         | Hash           | 1 000 000  | 63.49 MB                                                                                 |
-| DragonflyDB   | Hash           | 1 000 000  | [unknown, cause server misbehaving](https://github.com/dragonflydb/dragonfly/issues/993) |
-| Redis         | Hash           | 10 000 000 | 727.20 MB                                                                                |
-| KeyDB         | Hash           | 10 000 000 | 728.14 MB                                                                                |
-| DragonflyDB   | Hash           | 10 000 000 | [unknown, cause server misbehaving](https://github.com/dragonflydb/dragonfly/issues/993) |
-| Redis         | Hash           | 25 000 000 | 1592.14 MB                                                                               |
-| KeyDB         | Hash           | 25 000 000 | 1593.27 MB                                                                               |
-| DragonflyDB   | Hash           | 25 000 000 | [unknown, cause server misbehaving](https://github.com/dragonflydb/dragonfly/issues/993) |
-| Redis         | Sorted Set     | 1 000 000  | 91.09 MB                                                                                 |
-| KeyDB         | Sorted Set     | 1 000 000  | 91.93 MB                                                                                 |
-| DragonflyDB   | Sorted Set     | 1 000 000  | 107.87 MB                                                                                |
-| Redis         | Sorted Set     | 10 000 000 | 1011.78 MB                                                                               |
-| KeyDB         | Sorted Set     | 10 000 000 | 1012.64 MB                                                                               |
-| DragonflyDB   | Sorted Set     | 10 000 000 | 1161.64 MB                                                                               |
-| Redis         | Sorted Set     | 25 000 000 | 2303.58 MB                                                                               |
-| KeyDB         | Sorted Set     | 25 000 000 | unknown, cause store less then expected, 12583631 from 25000000                          |
-| DragonflyDB   | Sorted Set     | 25 000 000 | 2675.25 MB                                                                               |
-| Redis         | Set            | 1 000 000  | 48.14 MB                                                                                 |
-| KeyDB         | Set            | 1 000 000  | 49.02 MB                                                                                 |
-| DragonflyDB   | Set            | 1 000 000  | 32.60 MB                                                                                 |
-| Redis         | Set            | 10 000 000 | 469.57 MB                                                                                |
-| KeyDB         | Set            | 10 000 000 | 471.44 MB                                                                                |
-| DragonflyDB   | Set            | 10 000 000 | 297.01 MB                                                                                |
-| Redis         | Set            | 25 000 000 | 1169.33 MB                                                                               |
-| KeyDB         | Set            | 25 000 000 | 1175.45 MB                                                                               |
-| DragonflyDB   | Set            | 25 000 000 | unknown, cause store less then expected, 15443800 from 25000000                          |
+| Database name | Data structure | Users      | Memory                                                          |
+|---------------|----------------|------------|-----------------------------------------------------------------|
+| Redis         | Hash           | 1 000 000  | 62.64 MB                                                        |
+| KeyDB         | Hash           | 1 000 000  | 63.49 MB                                                        |
+| DragonflyDB   | Hash           | 1 000 000  | 61.51 MB                                                        |
+| Redis         | Hash           | 10 000 000 | 727.20 MB                                                       |
+| KeyDB         | Hash           | 10 000 000 | 728.14 MB                                                       |
+| DragonflyDB   | Hash           | 10 000 000 | 622.59 MB                                                       |
+| Redis         | Hash           | 25 000 000 | 1592.14 MB                                                      |
+| KeyDB         | Hash           | 25 000 000 | 1593.27 MB                                                      |
+| DragonflyDB   | Hash           | 25 000 000 | 1481.70  MB                                                     |
+| Redis         | Sorted Set     | 1 000 000  | 91.09 MB                                                        |
+| KeyDB         | Sorted Set     | 1 000 000  | 91.93 MB                                                        |
+| DragonflyDB   | Sorted Set     | 1 000 000  | 107.87 MB                                                       |
+| Redis         | Sorted Set     | 10 000 000 | 1011.78 MB                                                      |
+| KeyDB         | Sorted Set     | 10 000 000 | 1012.64 MB                                                      |
+| DragonflyDB   | Sorted Set     | 10 000 000 | 1161.64 MB                                                      |
+| Redis         | Sorted Set     | 25 000 000 | 2303.58 MB                                                      |
+| KeyDB         | Sorted Set     | 25 000 000 | unknown, cause store less then expected, 12583631 from 25000000 |
+| DragonflyDB   | Sorted Set     | 25 000 000 | 2675.25 MB                                                      |
+| Redis         | Set            | 1 000 000  | 48.14 MB                                                        |
+| KeyDB         | Set            | 1 000 000  | 49.02 MB                                                        |
+| DragonflyDB   | Set            | 1 000 000  | 32.60 MB                                                        |
+| Redis         | Set            | 10 000 000 | 469.57 MB                                                       |
+| KeyDB         | Set            | 10 000 000 | 471.44 MB                                                       |
+| DragonflyDB   | Set            | 10 000 000 | 297.01 MB                                                       |
+| Redis         | Set            | 25 000 000 | 1169.33 MB                                                      |
+| KeyDB         | Set            | 25 000 000 | 1175.45 MB                                                      |
+| DragonflyDB   | Set            | 25 000 000 | unknown, cause store less then expected, 15443800 from 25000000 |
 
 # Batch insert 10k rows x 10k times benchmark
 ```bash
