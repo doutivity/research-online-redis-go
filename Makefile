@@ -5,30 +5,30 @@ test:
 	docker exec research-online-redis-go-app go test ./... -v -count=1
 
 bench-redis-sequence:
-	docker exec -e MODE=sequence research-online-redis-go-app go test ./... -v -bench='Redis(Hash|SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-redis-1000000x-sequence.txt
+	docker exec -e MODE=sequence research-online-redis-go-app go test ./... -v -run=$$^ -bench='Redis(Hash|SortedSet|Set)' -benchmem -benchtime=10000x -count=10 | tee ./output/bench-redis-10x-10000x-sequence.txt
 
 bench-keydb-sequence:
-	docker exec -e MODE=sequence research-online-redis-go-app go test ./... -v -bench='Keydb(Hash|SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-keydb-1000000x-sequence.txt
+	docker exec -e MODE=sequence research-online-redis-go-app go test ./... -v -run=$$^ -bench='Keydb(Hash|SortedSet|Set)' -benchmem -benchtime=10000x -count=10 | tee ./output/bench-keydb-10x-10000x-sequence.txt
 
 bench-dragonflydb-sequence:
-	docker exec -e MODE=sequence research-online-redis-go-app go test ./... -v -bench='Dragonflydb(SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-dragonflydb-1000000x-sequence.txt
+	docker exec -e MODE=sequence research-online-redis-go-app go test ./... -v -run=$$^ -bench='Dragonflydb(Hash|SortedSet|Set)' -benchmem -benchtime=10000x -count=10 | tee ./output/bench-dragonflydb-10x-10000x-sequence.txt
 
 bench-redis-parallel:
-	docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -bench='Redis(Hash|SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-redis-1000000x-parallel.txt
+	docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$$^ -bench='Redis(Hash|SortedSet|Set)' -benchmem -benchtime=10000x -count=10 | tee ./output/bench-redis-10x-10000x-parallel.txt
 
 bench-keydb-parallel:
-	docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -bench='Keydb(Hash|SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-keydb-1000000x-parallel.txt
+	docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$$^ -bench='Keydb(Hash|SortedSet|Set)' -benchmem -benchtime=10000x -count=10 | tee ./output/bench-keydb-10x-10000x-parallel.txt
 
 bench-dragonflydb-parallel:
-	docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -bench='Dragonflydb(SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-dragonflydb-1000000x-parallel.txt
+	docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$$^ -bench='Dragonflydb(Hash|SortedSet|Set)' -benchmem -benchtime=10000x -count=10 | tee ./output/bench-dragonflydb-10x-10000x-parallel.txt
 
 bench: bench-redis-sequence bench-keydb-sequence bench-dragonflydb-sequence bench-redis-parallel bench-keydb-parallel bench-dragonflydb-parallel
-	benchstat bench-redis-1000000x-sequence.txt
-	benchstat bench-keydb-1000000x-sequence.txt
-	benchstat bench-dragonflydb-1000000x-sequence.txt
-	benchstat bench-redis-1000000x-parallel.txt
-	benchstat bench-keydb-1000000x-parallel.txt
-	benchstat bench-dragonflydb-1000000x-parallel.txt
+	benchstat ./output/bench-redis-10x-10000x-sequence.txt
+	benchstat ./output/bench-keydb-10x-10000x-sequence.txt
+	benchstat ./output/bench-dragonflydb-10x-10000x-sequence.txt
+	benchstat ./output/bench-redis-10x-10000x-parallel.txt
+	benchstat ./output/bench-keydb-10x-10000x-parallel.txt
+	benchstat ./output/bench-dragonflydb-10x-10000x-parallel.txt
 
 bench-redis-memory-25m:
 	docker exec research-online-redis-1 redis-cli flushall
