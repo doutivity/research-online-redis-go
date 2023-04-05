@@ -4,6 +4,10 @@ env-up:
 test:
 	docker exec research-online-redis-go-app go test ./... -v -count=1
 
+bench-go-sequence:
+	docker exec -e MODE=sequence research-online-redis-go-app go test ./... -v -run=$$^ -bench='Go' -benchmem -benchtime=10000x -count=10 | tee ./output/bench-go-10x-10000x-sequence.txt
+	benchstat ./output/bench-go-10x-10000x-sequence.txt
+
 bench-redis-sequence:
 	docker exec -e MODE=sequence research-online-redis-go-app go test ./... -v -run=$$^ -bench='Redis(Hash|SortedSet|Set)' -benchmem -benchtime=10000x -count=10 | tee ./output/bench-redis-10x-10000x-sequence.txt
 
@@ -12,6 +16,10 @@ bench-keydb-sequence:
 
 bench-dragonflydb-sequence:
 	docker exec -e MODE=sequence research-online-redis-go-app go test ./... -v -run=$$^ -bench='Dragonflydb(Hash|SortedSet|Set)' -benchmem -benchtime=10000x -count=10 | tee ./output/bench-dragonflydb-10x-10000x-sequence.txt
+
+bench-go-parallel:
+	docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$$^ -bench='Go' -benchmem -benchtime=10000x -count=10 | tee ./output/bench-go-10x-10000x-parallel.txt
+	benchstat ./output/bench-go-10x-10000x-parallel.txt
 
 bench-redis-parallel:
 	docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$$^ -bench='Redis(Hash|SortedSet|Set)' -benchmem -benchtime=10000x -count=10 | tee ./output/bench-redis-10x-10000x-parallel.txt
