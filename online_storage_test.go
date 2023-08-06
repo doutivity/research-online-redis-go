@@ -9,13 +9,19 @@ import (
 	"time"
 
 	"github.com/redis/go-redis/v9"
+
 	"github.com/stretchr/testify/require"
 )
 
-type onlineStorageConstructor func(client *redis.Client) OnlineStorage
-
-func testOnlineStorage(t *testing.T, addr string, newStorage onlineStorageConstructor) {
+func testOnlineStorage(
+	t *testing.T,
+	addr string,
+	constructor func(client *redis.Client) OnlineStorage,
+) {
 	t.Helper()
+	if testing.Short() {
+		t.Skip()
+	}
 
 	ctx := context.Background()
 
@@ -24,7 +30,7 @@ func testOnlineStorage(t *testing.T, addr string, newStorage onlineStorageConstr
 
 	require.NoError(t, client.FlushAll(ctx).Err())
 
-	storage := newStorage(client)
+	storage := constructor(client)
 
 	expected := []UserOnlinePair{
 		{
@@ -57,8 +63,15 @@ func testOnlineStorage(t *testing.T, addr string, newStorage onlineStorageConstr
 	requireUserOnlinePairsEqual(t, expected, actual)
 }
 
-func benchmarkOnlineStorage(b *testing.B, addr string, newStorage onlineStorageConstructor) {
+func benchmarkOnlineStorage(
+	b *testing.B,
+	addr string,
+	constructor func(client *redis.Client) OnlineStorage,
+) {
 	b.Helper()
+	if testing.Short() {
+		b.Skip()
+	}
 
 	ctx := context.Background()
 
@@ -67,11 +80,11 @@ func benchmarkOnlineStorage(b *testing.B, addr string, newStorage onlineStorageC
 
 	require.NoError(b, client.FlushDB(ctx).Err())
 
-	storage := newStorage(client)
+	storage := constructor(client)
 
 	var (
 		expectedCount  = int64(b.N)
-		startTimestamp = time.Now().Truncate(time.Hour).Unix()
+		startTimestamp = time.Now().Unix()
 		startUserID    = int64(1e7)
 	)
 
@@ -110,8 +123,8 @@ func benchmarkOnlineStorage(b *testing.B, addr string, newStorage onlineStorageC
 
 					for i := int64(0); i < batch; i++ {
 						pairs[i] = UserOnlinePair{
-							UserID:    startUserID + index - i,
-							Timestamp: startTimestamp + index - i,
+							UserID:    startUserID + index + i,
+							Timestamp: startTimestamp + index + i,
 						}
 					}
 

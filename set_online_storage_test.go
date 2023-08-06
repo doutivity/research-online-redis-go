@@ -7,10 +7,10 @@ import (
 )
 
 var (
-	setOnlineStorageTestConstructor onlineStorageConstructor = func(client *redis.Client) OnlineStorage {
+	setOnlineStorageTestConstructor = func(client *redis.Client) OnlineStorage {
 		return NewSetOnlineStorage(client, 1)
 	}
-	setOnlineStorageBenchmarkConstructor onlineStorageConstructor = func(client *redis.Client) OnlineStorage {
+	setOnlineStorageBenchmarkConstructor = func(client *redis.Client) OnlineStorage {
 		return NewSetOnlineStorage(client, 1800)
 	}
 )

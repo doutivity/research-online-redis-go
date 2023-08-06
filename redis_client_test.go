@@ -9,28 +9,25 @@ import (
 )
 
 func TestRedisPing(t *testing.T) {
-	client := redis.NewClient(&redis.Options{
-		Addr: "redis1:6379",
-	})
-
-	result, err := client.Ping(context.Background()).Result()
-	require.NoError(t, err)
-	require.Equal(t, "PONG", result)
+	testPing(t, "redis1:6379")
 }
 
 func TestKeydbPing(t *testing.T) {
-	client := redis.NewClient(&redis.Options{
-		Addr: "keydb1:6379",
-	})
-
-	result, err := client.Ping(context.Background()).Result()
-	require.NoError(t, err)
-	require.Equal(t, "PONG", result)
+	testPing(t, "keydb1:6379")
 }
 
 func TestDragonflydbPing(t *testing.T) {
+	testPing(t, "dragonflydb1:6379")
+}
+
+func testPing(t *testing.T, addr string) {
+	t.Helper()
+	if testing.Short() {
+		t.Skip()
+	}
+
 	client := redis.NewClient(&redis.Options{
-		Addr: "dragonflydb1:6379",
+		Addr: addr,
 	})
 
 	result, err := client.Ping(context.Background()).Result()
