@@ -119,15 +119,16 @@ make bench
 ```
 | Database name | Data structure | sequence time/op | parallel time/op |
 |---------------|----------------|------------------|------------------|
-| Redis         | Hash           | 38.8µs ± 9%      | 14.7µs ± 8%      |
-| KeyDB         | Hash           | 46.4µs ± 7%      | 15.5µs ± 4%      |
-| DragonflyDB   | Hash           | 61.5µs ±10%      | 18.5µs ± 4%      |
-| Redis         | Sorted Set     | 42.1µs ±13%      | 17.1µs ±14%      |
-| KeyDB         | Sorted Set     | 50.0µs ± 7%      | 16.2µs ± 5%      |
-| DragonflyDB   | Sorted Set     | 58.5µs ±13%      | 18.8µs ± 8%      |
-| Redis         | Set            | 39.7µs ±13%      | 15.4µs ±12%      |
-| KeyDB         | Set            | 47.6µs ± 6%      | 18.3µs ± 6%      |
-| DragonflyDB   | Set            | 65.7µs ±13%      | 27.2µs ± 6%      |
+| Go            | map[int]int    | 515ns ± 9%       | 696ns ± 8%       |
+| Redis         | Hash           | 33.5µs ± 6%      | 13.9µs ±24%      |
+| KeyDB         | Hash           | 36.9µs ± 2%      | 14.5µs ±23%      |
+| DragonflyDB   | Hash           | 44.0µs ± 2%      | 13.6µs ±12%      |
+| Redis         | Sorted Set     | 34.4µs ± 1%      | 13.5µs ± 6%      |
+| KeyDB         | Sorted Set     | 38.6µs ± 1%      | 14.1µs ± 2%      |
+| DragonflyDB   | Sorted Set     | 52.9µs ±15%      | 16.3µs ± 8%      |
+| Redis         | Set            | 32.6µs ± 1%      | 12.4µs ± 2%      |
+| KeyDB         | Set            | 36.7µs ± 1%      | 13.7µs ± 3%      |
+| DragonflyDB   | Set            | 45.9µs ± 4%      | 14.4µs ±16%      |
 
 # Used memory
 ```bash
@@ -170,7 +171,7 @@ make bench-dragonflydb-memory-25m
 | KeyDB         | Sorted Set     | 10 000 000 | 1012.64 MB                                                      |
 | DragonflyDB   | Sorted Set     | 10 000 000 | 1161.64 MB                                                      |
 | Redis         | Sorted Set     | 25 000 000 | 2303.58 MB                                                      |
-| KeyDB         | Sorted Set     | 25 000 000 | unknown, cause store less then expected, 12583631 from 25000000 |
+| KeyDB         | Sorted Set     | 25 000 000 | 2304.70 MB                                                      |
 | DragonflyDB   | Sorted Set     | 25 000 000 | 2675.25 MB                                                      |
 | Redis         | Set            | 1 000 000  | 48.14 MB                                                        |
 | KeyDB         | Set            | 1 000 000  | 49.02 MB                                                        |
@@ -180,7 +181,7 @@ make bench-dragonflydb-memory-25m
 | DragonflyDB   | Set            | 10 000 000 | 297.01 MB                                                       |
 | Redis         | Set            | 25 000 000 | 1169.33 MB                                                      |
 | KeyDB         | Set            | 25 000 000 | 1175.45 MB                                                      |
-| DragonflyDB   | Set            | 25 000 000 | unknown, cause store less then expected, 15443800 from 25000000 |
+| DragonflyDB   | Set            | 25 000 000 | unknown, cause store less then expected, 15276400 from 25000000 |
 
 # Batch insert 10k rows x 10k times benchmark
 ```bash
@@ -242,8 +243,8 @@ docker image inspect redis:latest --format '{{.RepoDigests}} {{.Size}}'
 docker image inspect eqalpha/keydb:latest --format '{{.RepoDigests}} {{.Size}}'
 docker image inspect docker.dragonflydb.io/dragonflydb/dragonfly --format '{{.RepoDigests}} {{.Size}}'
 ```
-| Database name | Docker image                                                            | Docker image size |
-|---------------|-------------------------------------------------------------------------|-------------------|
-| Redis         | sha256:b0bdc1a83caf43f9eb74afca0fcfd6f09bea38bb87f6add4a858f06ef4617538 | 129.93 MB         |
-| KeyDB         | sha256:c6c09ea6f80b073e224817e9b4a554db7f33362e8321c4084701884be72eed67 | 129.09 MB         |
-| DragonflyDB   | sha256:73b995caf8fa8e3a00928ac5843864ba7f6a8b80ba959eff53386dd9cbb8b589 | 188.90 MB         |
+| Database name | Docker image size | Docker image                                                            |
+|---------------|-------------------|-------------------------------------------------------------------------|
+| Redis         | 129.93 MB         | sha256:b0bdc1a83caf43f9eb74afca0fcfd6f09bea38bb87f6add4a858f06ef4617538 |
+| KeyDB         | 129.09 MB         | sha256:c6c09ea6f80b073e224817e9b4a554db7f33362e8321c4084701884be72eed67 |
+| DragonflyDB   | 188.90 MB         | sha256:73b995caf8fa8e3a00928ac5843864ba7f6a8b80ba959eff53386dd9cbb8b589 |
