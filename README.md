@@ -10,9 +10,9 @@ https://dou.ua/forums/topic/35260/
 # Databases
 | Name                                                    | Stars  | Language                               |
 |---------------------------------------------------------|--------|----------------------------------------|
-| [Redis](https://github.com/redis/redis)                 | 59100+ | [C](https://dou.ua/forums/tags/C/)     |
-| [KeyDB](https://github.com/Snapchat/KeyDB)              | 7100+  | [C++](https://dou.ua/forums/tags/C++/) |
-| [DragonflyDB](https://github.com/dragonflydb/dragonfly) | 18300+ | [C++](https://dou.ua/forums/tags/C++/) |
+| [Redis](https://github.com/redis/redis)                 | 60900+ | [C](https://dou.ua/forums/tags/C/)     |
+| [KeyDB](https://github.com/Snapchat/KeyDB)              | 7800+  | [C++](https://dou.ua/forums/tags/C++/) |
+| [DragonflyDB](https://github.com/dragonflydb/dragonfly) | 20700+ | [C++](https://dou.ua/forums/tags/C++/) |
 
 # Data structure usage examples
 ### Hash
@@ -230,3 +230,20 @@ make bench-dragonflydb-memory-10k-batch-10k
 
 # Star history of Redis vs KeyDB vs DragonflyDB
 [![Star History Chart](https://api.star-history.com/svg?repos=redis/redis,Snapchat/KeyDB,dragonflydb/dragonfly&type=Date)](https://star-history.com/#redis/redis&Snapchat/KeyDB&dragonflydb/dragonfly&Date)
+
+# Versions
+```bash
+docker pull redis:latest
+docker pull eqalpha/keydb:latest
+docker pull docker.dragonflydb.io/dragonflydb/dragonfly
+```
+```bash
+docker image inspect redis:latest --format '{{.RepoDigests}} {{.Size}}'
+docker image inspect eqalpha/keydb:latest --format '{{.RepoDigests}} {{.Size}}'
+docker image inspect docker.dragonflydb.io/dragonflydb/dragonfly --format '{{.RepoDigests}} {{.Size}}'
+```
+| Database name | Docker image                                                            | Docker image size |
+|---------------|-------------------------------------------------------------------------|-------------------|
+| Redis         | sha256:b0bdc1a83caf43f9eb74afca0fcfd6f09bea38bb87f6add4a858f06ef4617538 | 129.93 MB         |
+| KeyDB         | sha256:c6c09ea6f80b073e224817e9b4a554db7f33362e8321c4084701884be72eed67 | 129.09 MB         |
+| DragonflyDB   | sha256:73b995caf8fa8e3a00928ac5843864ba7f6a8b80ba959eff53386dd9cbb8b589 | 188.90 MB         |

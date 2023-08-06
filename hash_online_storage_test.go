@@ -6,7 +6,7 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-var hashOnlineStorageConstructor onlineStorageConstructor = func(client *redis.Client) OnlineStorage {
+var hashOnlineStorageConstructor = func(client *redis.Client) OnlineStorage {
 	return NewHashOnlineStorage(client)
 }
 

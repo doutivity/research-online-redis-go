@@ -6,7 +6,7 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-var sortedSetOnlineStorageConstructor onlineStorageConstructor = func(client *redis.Client) OnlineStorage {
+var sortedSetOnlineStorageConstructor = func(client *redis.Client) OnlineStorage {
 	return NewSortedSetOnlineStorage(client)
 }
 
