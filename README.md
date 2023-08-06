@@ -105,15 +105,19 @@ ok  	github.com/doutivity/research-online-redis-go	0.214s
 # Benchmark
 ```bash
 make bench
+# MODE=sequence go test ./... -v -bench='Go'                         -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-go-1000000x-sequence.txt
 # MODE=sequence go test ./... -v -bench='Redis(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-redis-1000000x-sequence.txt
 # MODE=sequence go test ./... -v -bench='Keydb(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-keydb-1000000x-sequence.txt
 # MODE=sequence go test ./... -v -bench='Dragonflydb(SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-dragonflydb-1000000x-sequence.txt
+# MODE=parallel go test ./... -v -bench='Go'                         -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-go-1000000x-parallel.txt
 # MODE=parallel go test ./... -v -bench='Redis(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-redis-1000000x-parallel.txt
 # MODE=parallel go test ./... -v -bench='Keydb(Hash|SortedSet|Set)'  -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-keydb-1000000x-parallel.txt
 # MODE=parallel go test ./... -v -bench='Dragonflydb(SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-dragonflydb-1000000x-parallel.txt
+# benchstat ./output/bench-go-1000000x-sequence.txt
 # benchstat ./output/bench-redis-1000000x-sequence.txt
 # benchstat ./output/bench-keydb-1000000x-sequence.txt
 # benchstat ./output/bench-dragonflydb-1000000x-sequence.txt
+# benchstat ./output/bench-go-1000000x-parallel.txt
 # benchstat ./output/bench-redis-1000000x-parallel.txt
 # benchstat ./output/bench-keydb-1000000x-parallel.txt
 # benchstat ./output/bench-dragonflydb-1000000x-parallel.txt
