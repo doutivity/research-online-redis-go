@@ -1,10 +1,11 @@
 # Efficiently store online with Redis and Go
-https://dou.ua/forums/topic/35260/
+- [Збереження стану онлайну користувача в Redis](https://dou.ua/forums/topic/35260/)
+- [Hash, Set чи Sorted set. Який тип даних вибрати для збереження стану онлайну користувача в Redis?](https://dou.ua/forums/topic/44655/)
 
 # Support Ukraine 🇺🇦
-- [Збір для NN бригади від Go-розробника](https://dou.ua/forums/topic/42510/)
+- Help Ukraine via [SaveLife fund](https://savelife.in.ua/en/donate-en/)
+- Help Ukraine via [Dignitas fund](https://dignitas.fund/donate/)
 - Help Ukraine via [National Bank of Ukraine](https://bank.gov.ua/en/news/all/natsionalniy-bank-vidkriv-spetsrahunok-dlya-zboru-koshtiv-na-potrebi-armiyi)
-- Help Ukraine via [SaveLife](https://savelife.in.ua/en/donate-en/) fund
 - More info on [war.ukraine.ua](https://war.ukraine.ua/) and [MFA of Ukraine](https://twitter.com/MFA_Ukraine)
 
 # Databases
