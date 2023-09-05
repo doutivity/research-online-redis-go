@@ -1,6 +1,7 @@
 # Efficiently store online with Redis and Go
 - [Збереження стану онлайну користувача в Redis](https://dou.ua/forums/topic/35260/)
 - [Hash, Set чи Sorted set. Який тип даних вибрати для збереження стану онлайну користувача в Redis?](https://dou.ua/forums/topic/44655/)
+- [Efficiently store online with Redis and Rust](https://github.com/doutivity/research-online-redis-rust)
 
 # Support Ukraine 🇺🇦
 - Help Ukraine via [SaveLife fund](https://savelife.in.ua/en/donate-en/)
@@ -11,9 +12,9 @@
 # Databases
 | Name                                                    | Stars  | Language                               |
 |---------------------------------------------------------|--------|----------------------------------------|
-| [Redis](https://github.com/redis/redis)                 | 60900+ | [C](https://dou.ua/forums/tags/C/)     |
-| [KeyDB](https://github.com/Snapchat/KeyDB)              | 7800+  | [C++](https://dou.ua/forums/tags/C++/) |
-| [DragonflyDB](https://github.com/dragonflydb/dragonfly) | 20700+ | [C++](https://dou.ua/forums/tags/C++/) |
+| [Redis](https://github.com/redis/redis)                 | 61300+ | [C](https://dou.ua/forums/tags/C/)     |
+| [KeyDB](https://github.com/Snapchat/KeyDB)              | 7900+  | [C++](https://dou.ua/forums/tags/C++/) |
+| [DragonflyDB](https://github.com/dragonflydb/dragonfly) | 20900+ | [C++](https://dou.ua/forums/tags/C++/) |
 
 # Data structure usage examples
 ### Hash
