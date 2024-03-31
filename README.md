@@ -251,13 +251,14 @@ make bench-dragonflydb-memory-10k-batch-10k
 | DragonflyDB   | Set            | unknown, cause store less then expected, 15622200 from 100000000 |
 
 # Star history of Redis vs KeyDB vs DragonflyDB
-[![Star History Chart](https://api.star-history.com/svg?repos=redis/redis,Snapchat/KeyDB,dragonflydb/dragonfly&type=Date)](https://star-history.com/#redis/redis&Snapchat/KeyDB&dragonflydb/dragonfly&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=redis/redis,Snapchat/KeyDB,dragonflydb/dragonfly,microsoft/garnet&type=Date)](https://star-history.com/#redis/redis&Snapchat/KeyDB&dragonflydb/dragonfly&microsoft/garnet&Date)
 
 # Versions
 ```bash
 docker pull redis:latest
 docker pull eqalpha/keydb:latest
 docker pull docker.dragonflydb.io/dragonflydb/dragonfly
+docker pull ghcr.io/microsoft/garnet
 ```
 ```bash
 docker image inspect redis:latest --format '{{.RepoDigests}} {{.Size}}'
