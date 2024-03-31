@@ -12,9 +12,10 @@
 # Databases
 | Name                                                    | Stars  | Language                               |
 |---------------------------------------------------------|--------|----------------------------------------|
-| [Redis](https://github.com/redis/redis)                 | 61300+ | [C](https://dou.ua/forums/tags/C/)     |
-| [KeyDB](https://github.com/Snapchat/KeyDB)              | 7900+  | [C++](https://dou.ua/forums/tags/C++/) |
-| [DragonflyDB](https://github.com/dragonflydb/dragonfly) | 20900+ | [C++](https://dou.ua/forums/tags/C++/) |
+| [Redis](https://github.com/redis/redis)                 | 64300+ | [C](https://dou.ua/forums/tags/C/)     |
+| [KeyDB](https://github.com/Snapchat/KeyDB)              | 10100+ | [C++](https://dou.ua/forums/tags/C++/) |
+| [DragonflyDB](https://github.com/dragonflydb/dragonfly) | 23300+ | [C++](https://dou.ua/forums/tags/C++/) |
+| [Garnet](https://github.com/microsoft/garnet)           | 7900+  | [C#](https://dou.ua/forums/tags/C%23/) |
 
 # Data structure usage examples
 ### Hash
@@ -81,26 +82,40 @@ make test
 make env-down
 ```
 ```text
+=== RUN   TestGoOnlineStorage
+--- PASS: TestGoOnlineStorage (0.00s)
 === RUN   TestRedisHashOnlineStorage
---- PASS: TestRedisHashOnlineStorage (0.01s)
+--- PASS: TestRedisHashOnlineStorage (0.00s)
 === RUN   TestKeydbHashOnlineStorage
---- PASS: TestKeydbHashOnlineStorage (0.01s)
+--- PASS: TestKeydbHashOnlineStorage (0.00s)
 === RUN   TestDragonflydbHashOnlineStorage
---- PASS: TestDragonflydbHashOnlineStorage (0.02s)
+--- PASS: TestDragonflydbHashOnlineStorage (0.00s)
+=== RUN   TestGarnetHashOnlineStorage
+--- PASS: TestGarnetHashOnlineStorage (0.00s)
+=== RUN   TestRedisPing
+--- PASS: TestRedisPing (0.00s)
+=== RUN   TestKeydbPing
+--- PASS: TestKeydbPing (0.00s)
+=== RUN   TestDragonflydbPing
+--- PASS: TestDragonflydbPing (0.00s)
 === RUN   TestRedisSetOnlineStorage
---- PASS: TestRedisSetOnlineStorage (0.01s)
+--- PASS: TestRedisSetOnlineStorage (0.00s)
 === RUN   TestKeydbSetOnlineStorage
---- PASS: TestKeydbSetOnlineStorage (0.01s)
+--- PASS: TestKeydbSetOnlineStorage (0.00s)
 === RUN   TestDragonflydbSetOnlineStorage
---- PASS: TestDragonflydbSetOnlineStorage (0.09s)
+--- PASS: TestDragonflydbSetOnlineStorage (0.01s)
+=== RUN   TestGarnetSetOnlineStorage
+--- PASS: TestGarnetSetOnlineStorage (0.11s)
 === RUN   TestRedisSortedSetOnlineStorage
---- PASS: TestRedisSortedSetOnlineStorage (0.01s)
+--- PASS: TestRedisSortedSetOnlineStorage (0.00s)
 === RUN   TestKeydbSortedSetOnlineStorage
---- PASS: TestKeydbSortedSetOnlineStorage (0.01s)
+--- PASS: TestKeydbSortedSetOnlineStorage (0.00s)
 === RUN   TestDragonflydbSortedSetOnlineStorage
---- PASS: TestDragonflydbSortedSetOnlineStorage (0.05s)
+--- PASS: TestDragonflydbSortedSetOnlineStorage (0.02s)
+=== RUN   TestGarnetSortedSetOnlineStorage
+--- PASS: TestGarnetSortedSetOnlineStorage (0.00s)
 PASS
-ok  	github.com/doutivity/research-online-redis-go	0.214s
+ok  	github.com/doutivity/research-online-redis-go	0.154s
 ```
 
 # Benchmark
@@ -236,21 +251,24 @@ make bench-dragonflydb-memory-10k-batch-10k
 | DragonflyDB   | Set            | unknown, cause store less then expected, 15622200 from 100000000 |
 
 # Star history of Redis vs KeyDB vs DragonflyDB
-[![Star History Chart](https://api.star-history.com/svg?repos=redis/redis,Snapchat/KeyDB,dragonflydb/dragonfly&type=Date)](https://star-history.com/#redis/redis&Snapchat/KeyDB&dragonflydb/dragonfly&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=redis/redis,Snapchat/KeyDB,dragonflydb/dragonfly,microsoft/garnet&type=Date)](https://star-history.com/#redis/redis&Snapchat/KeyDB&dragonflydb/dragonfly&microsoft/garnet&Date)
 
 # Versions
 ```bash
 docker pull redis:latest
 docker pull eqalpha/keydb:latest
 docker pull docker.dragonflydb.io/dragonflydb/dragonfly
+docker pull ghcr.io/microsoft/garnet
 ```
 ```bash
 docker image inspect redis:latest --format '{{.RepoDigests}} {{.Size}}'
 docker image inspect eqalpha/keydb:latest --format '{{.RepoDigests}} {{.Size}}'
 docker image inspect docker.dragonflydb.io/dragonflydb/dragonfly --format '{{.RepoDigests}} {{.Size}}'
+docker image inspect ghcr.io/microsoft/garnet --format '{{.RepoDigests}} {{.Size}}'
 ```
 | Database name | Docker image size | Docker image                                                            |
 |---------------|-------------------|-------------------------------------------------------------------------|
-| Redis         | 129.93 MB         | sha256:b0bdc1a83caf43f9eb74afca0fcfd6f09bea38bb87f6add4a858f06ef4617538 |
-| KeyDB         | 129.09 MB         | sha256:c6c09ea6f80b073e224817e9b4a554db7f33362e8321c4084701884be72eed67 |
-| DragonflyDB   | 188.90 MB         | sha256:73b995caf8fa8e3a00928ac5843864ba7f6a8b80ba959eff53386dd9cbb8b589 |
+| Redis         | 131.32 MB         | sha256:3134997edb04277814aa51a4175a588d45eb4299272f8eff2307bbf8b39e4d43 |
+| KeyDB         | 130.39 MB         | sha256:6537505c42355ca1f571276bddf83f5b750f760f07b2a185a676481791e388ac |
+| DragonflyDB   | 106.65 MB         | sha256:48d7f1679a895702262808c83689df94b14d40c07401fad90723ad164d271150 |
+| Garnet        | 196.50 MB         | sha256:0da3da0cd45d8a7084d670b7b1a96748cea40917ed054fc98840ce6e4036b97b |

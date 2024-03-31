@@ -3,7 +3,7 @@ version: "3.7"
 services:
   app:
     container_name: "research-online-redis-go-app"
-    image: golang:1.20.0-alpine
+    image: golang:1.21.0-alpine
     working_dir: /go/src/github.com/doutivity/research-online-redis-go
     volumes:
       - .:/go/src/github.com/doutivity/research-online-redis-go
@@ -12,6 +12,7 @@ services:
       - redis1
       - keydb1
       - dragonflydb1
+      - garnet1
 
   redis1:
     container_name: "research-online-redis-1"
@@ -24,3 +25,7 @@ services:
   dragonflydb1:
     container_name: "research-online-dragonflydb-1"
     image: "docker.dragonflydb.io/dragonflydb/dragonfly"
+
+  garnet1:
+    container_name: "research-online-garnet-1"
+    image: "ghcr.io/microsoft/garnet"
