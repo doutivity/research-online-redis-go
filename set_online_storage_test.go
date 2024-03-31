@@ -27,6 +27,10 @@ func TestDragonflydbSetOnlineStorage(t *testing.T) {
 	testOnlineStorage(t, "dragonflydb1:6379", setOnlineStorageTestConstructor)
 }
 
+func TestGarnetSetOnlineStorage(t *testing.T) {
+	testOnlineStorage(t, "garnet1:6379", setOnlineStorageTestConstructor)
+}
+
 func BenchmarkRedisSetOnlineStorage(b *testing.B) {
 	benchmarkOnlineStorage(b, "redis1:6379", setOnlineStorageBenchmarkConstructor)
 }
@@ -37,4 +41,8 @@ func BenchmarkKeydbSetOnlineStorage(b *testing.B) {
 
 func BenchmarkDragonflydbSetOnlineStorage(b *testing.B) {
 	benchmarkOnlineStorage(b, "dragonflydb1:6379", setOnlineStorageBenchmarkConstructor)
+}
+
+func BenchmarkGarnetSetOnlineStorage(b *testing.B) {
+	benchmarkOnlineStorage(b, "garnet1:6379", setOnlineStorageBenchmarkConstructor)
 }

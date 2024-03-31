@@ -22,6 +22,10 @@ func TestDragonflydbHashOnlineStorage(t *testing.T) {
 	testOnlineStorage(t, "dragonflydb1:6379", hashOnlineStorageConstructor)
 }
 
+func TestGarnetHashOnlineStorage(t *testing.T) {
+	testOnlineStorage(t, "garnet1:6379", hashOnlineStorageConstructor)
+}
+
 func BenchmarkRedisHashOnlineStorage(b *testing.B) {
 	benchmarkOnlineStorage(b, "redis1:6379", hashOnlineStorageConstructor)
 }
@@ -32,4 +36,8 @@ func BenchmarkKeydbHashOnlineStorage(b *testing.B) {
 
 func BenchmarkDragonflydbHashOnlineStorage(b *testing.B) {
 	benchmarkOnlineStorage(b, "dragonflydb1:6379", hashOnlineStorageConstructor)
+}
+
+func BenchmarkGarnetHashOnlineStorage(b *testing.B) {
+	benchmarkOnlineStorage(b, "garnet1:6379", hashOnlineStorageConstructor)
 }

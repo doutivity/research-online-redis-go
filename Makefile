@@ -16,6 +16,9 @@ bench-keydb-sequence:
 bench-dragonflydb-sequence:
 	docker exec -e MODE=sequence research-online-redis-go-app go test ./... -v -run=$$^ -bench='Dragonflydb(Hash|SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-dragonflydb-1000000x-sequence.txt
 
+bench-garnet-sequence:
+	docker exec -e MODE=sequence research-online-redis-go-app go test ./... -v -run=$$^ -bench='Garnet(Hash|SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-garnet-1000000x-sequence.txt
+
 bench-go-parallel:
 	docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$$^ -bench='Go' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-go-1000000x-parallel.txt
 
@@ -27,6 +30,9 @@ bench-keydb-parallel:
 
 bench-dragonflydb-parallel:
 	docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$$^ -bench='Dragonflydb(Hash|SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-dragonflydb-1000000x-parallel.txt
+
+bench-garnet-parallel:
+	docker exec -e MODE=parallel research-online-redis-go-app go test ./... -v -run=$$^ -bench='Garnet(Hash|SortedSet|Set)' -benchmem -benchtime=1000000x -count=5 | tee ./output/bench-garnet-1000000x-parallel.txt
 
 bench:
 	make bench-go-sequence bench-redis-sequence bench-keydb-sequence bench-dragonflydb-sequence
@@ -138,4 +144,5 @@ env-down:
 pull:
 	docker pull redis:latest
 	docker pull eqalpha/keydb:latest
-	docker pull docker.dragonflydb.io/dragonflydb/dragonfly:latest
+	docker pull docker.dragonflydb.io/dragonflydb/dragonfly
+	docker pull ghcr.io/microsoft/garnet

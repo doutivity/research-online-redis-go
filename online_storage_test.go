@@ -28,7 +28,7 @@ func testOnlineStorage(
 	client, err := Client(ctx, addr)
 	require.NoError(t, err)
 
-	require.NoError(t, client.FlushAll(ctx).Err())
+	require.NoError(t, client.FlushDB(ctx).Err())
 
 	storage := constructor(client)
 
